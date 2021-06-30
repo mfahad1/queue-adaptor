@@ -6,9 +6,9 @@ export type AdaptorConfig = {
   brokers: string[];
 }
 
-type Adaptors = {
-  kafka: "kafka",
-  sqs: "sqs"
+export enum Adaptors {
+  kafka = 'kafka',
+  sqs = 'sqs'
 }
 
 export default class Queue {
@@ -18,10 +18,10 @@ export default class Queue {
     private type: Adaptors,
     private config: AdaptorConfig,
   ) {
-    if (this.type.kafka) {
-      this.client = new KafkaClient(config);
+    if (this.type === Adaptors.kafka) {
+      this.client = new KafkaClient(this.config);
     }
-    if (this.type.sqs) {
+    if (this.type === Adaptors.sqs) {
       throw new Error('WIP');
     }
   }
